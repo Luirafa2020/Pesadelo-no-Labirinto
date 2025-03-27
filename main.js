@@ -112,7 +112,7 @@ async function init() {
         loadingText.style.display = 'none';
         instructions.innerHTML = `
                 <h1>Pesadelo no Labirinto</h1> <p>Clique para iniciar</p>
-                <p>(W, A, S, D = Mover | MOUSE = Olhar | F = Lanterna)</p> <p>(Movimento A/D Invertido)</p>
+                <p>(W, A, S, D = Mover | MOUSE = Olhar | F = Lanterna)</p>
                 <p style="color: #f33; font-weight: bold;">ELE TE ENCONTROU.</p>
                 <p>Encontre a saída... SE PUDER.</p>
                 <p style="font-weight: bold; color: #0f0;">Pronto!</p>`;
