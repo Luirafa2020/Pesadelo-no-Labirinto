@@ -1,0 +1,141 @@
+/* --- START OF FILE style.css --- */
+
+body {
+    margin: 0;
+    background-color: #000;
+    color: #fff;
+    font-family: 'Courier New', Courier, monospace;
+    overflow: hidden; /* Impede barras de rolagem */
+}
+
+#container {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+}
+
+#gameCanvas {
+    display: block; /* Remove espaço extra abaixo do canvas */
+    width: 100%;
+    height: 100%;
+}
+
+#blocker {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(0,0,0,0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 10; /* Abaixo da tela final/game over */
+}
+
+#instructions {
+    text-align: center;
+    padding: 20px;
+    background-color: rgba(10, 10, 10, 0.9);
+    border: 1px solid #555;
+    border-radius: 5px;
+    max-width: 80%;
+}
+
+#instructions h1 {
+    color: #b00;
+    margin-top: 0;
+}
+
+#instructions p {
+    font-size: 1.2em;
+    color: #ccc;
+}
+
+#loading {
+    margin-top: 20px;
+    font-style: italic;
+    color: #888;
+}
+
+#crosshair {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 20px;
+    color: rgba(255, 255, 255, 0.4);
+    pointer-events: none; /* Não interfere com o clique do mouse */
+    display: none; /* Escondido até o jogo começar */
+    z-index: 1;
+}
+
+#message {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0,0,0,0.7);
+    padding: 10px 20px;
+    border-radius: 5px;
+    color: #ffcc00;
+    font-size: 1.1em;
+    display: none; /* Escondido inicialmente */
+    text-align: center;
+    z-index: 1;
+}
+
+#endScreen, #gameOverScreen { /* Aplicar estilo a ambas as telas finais */
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(0,0,0,0.95); /* Mais opaco */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    z-index: 100; /* Garante que fique por cima */
+    display: none; /* Escondido por padrão */
+}
+
+#endScreen h2 {
+    font-size: 3em;
+    color: #0f0; /* Verde para vitória */
+}
+#gameOverScreen h2 {
+    font-size: 3.5em; /* Maior para derrota */
+    color: #d00; /* Vermelho para derrota */
+     text-shadow: 2px 2px 5px #000;
+}
+
+
+#endScreen p, #gameOverScreen p {
+    font-size: 1.5em;
+    color: #ccc;
+    margin-top: 0;
+}
+
+#endScreen button, #gameOverScreen button {
+    padding: 15px 30px;
+    font-size: 1.2em;
+    margin-top: 30px; /* Mais espaço */
+    cursor: pointer;
+    background-color: #333;
+    color: #fff;
+    border: 1px solid #666;
+    border-radius: 5px;
+    transition: background-color 0.3s, transform 0.1s;
+}
+
+#endScreen button:hover, #gameOverScreen button:hover {
+    background-color: #555;
+}
+#endScreen button:active, #gameOverScreen button:active {
+    transform: scale(0.95);
+}
+
+/* --- FIM DO ARQUIVO style.css --- */

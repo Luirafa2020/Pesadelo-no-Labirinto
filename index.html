@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pesadelo no Labirinto</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👻</text></svg>">
+</head>
+<body>
+    <div id="container">
+        <canvas id="gameCanvas"></canvas>
+        <div id="blocker">
+            <div id="instructions">
+                <h1>Pesadelo no Labirinto</h1>
+                <p>Clique para iniciar</p>
+                <p>(W, A, S, D = Mover | MOUSE = Olhar | F = Lanterna)</p>
+                <p style="color: #f33; font-weight: bold;">NÃO OLHE PARA TRÁS.</p>
+                <p>Encontre a saída... AGORA.</p>
+                <div id="loading">Carregando Recursos...</div>
+            </div>
+        </div>
+        <div id="crosshair">+</div>
+        <div id="message"></div>
+        <div id="endScreen" style="display: none;">
+            <h2>Você Escapou!</h2>
+            <p>(A Sombra Recua... Por Hora.)</p>
+            <button onclick="location.reload()">Jogar Novamente</button>
+        </div>
+        <div id="gameOverScreen" style="display: none;">
+            <h2>DEVORADO!</h2>
+            <p>Sua luz se apagou na escuridão.</p>
+            <button onclick="location.reload()">Enfrentar o Pesadelo Novamente</button>
+        </div>
+    </div>
+
+    {/* --- Importações Three.js como Módulos --- */}
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.128.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.128.0/examples/jsm/"
+            }
+        }
+    </script>
+
+    {/* --- Nossos Scripts --- */}
+    {/* Scripts auxiliares que NÃO usam THREE ou imports/exports podem continuar normais */}
+    {/* (Verifique se eles realmente não precisam do THREE global agora) */}
+    <script src="audio.js"></script>
+    <script src="maze.js"></script>
+
+    {/* Scripts que usam THREE ou imports/exports precisam ser módulos */}
+    <script type="module" src="textures.js"></script>
+    <script type="module" src="main.js"></script>    {/* main.js DEVE vir por último */}
+
+</body>
+</html>
