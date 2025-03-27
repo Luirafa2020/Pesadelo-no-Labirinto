@@ -420,8 +420,8 @@ function updateMonster(delta) {
         if (distanceToMovementTargetSq > epsilon * epsilon) {
             monsterMoveDir.subVectors(targetPosForMovement, currentBasePos).normalize();
             const moveDistance = monster.speed * delta;
-            // Não permite ultrapassar o alvo nesta iteração para evitar overshoot
-            const actualMoveDistance = Math.min(moveDistance, Math.sqrt(distanceToMovementTargetSq));
+            // Remove a limitação para garantir movimento contínuo - sempre move a distância total do frame.
+            const actualMoveDistance = moveDistance; // Math.min(moveDistance, Math.sqrt(distanceToMovementTargetSq));
             positionUpdateVector.copy(monsterMoveDir).multiplyScalar(actualMoveDistance);
 
             // Aplica o movimento
@@ -450,13 +450,20 @@ function updateMonster(delta) {
         }
     }
 
-    // --- 6. Rotação (SEMPRE olhando para o jogador) ---
+    // --- 6. Rotação (SEMPRE olhando para o jogador - com correção de 180 graus) ---
     targetPositionForRotation.copy(playerPos);
-    targetPositionForRotation.y = playerPos.y; // Altura Y do player
+    targetPositionForRotation.y = playerPos.y; // Considera a altura Y do player para o lookAt
 
     if (monster.group.position.distanceToSquared(targetPositionForRotation) > epsilon * epsilon) {
+         // Calcula a rotação para o eixo -Z local apontar para o jogador
          rotationMatrix.lookAt(monster.group.position, targetPositionForRotation, monster.group.up);
          targetQuaternion.setFromRotationMatrix(rotationMatrix);
+
+         // *** CORREÇÃO: Aplica uma rotação adicional de 180 graus no eixo Y local ***
+         // Isso é necessário se a "frente" do modelo não for o eixo -Z padrão do lookAt.
+         const yRotationOffset = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), Math.PI);
+         targetQuaternion.multiply(yRotationOffset);
+         // **************************************************************************
 
          const angleToTarget = monster.group.quaternion.angleTo(targetQuaternion);
          if (angleToTarget > epsilon) {
