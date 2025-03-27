@@ -46,7 +46,7 @@ const monster = {
     desiredHeight: WALL_HEIGHT * 0.80,
     verticalOffset: 0.05,
     baseOffsetY: 0,
-    rotationSpeed: 3.5,
+    rotationSpeed: 2.0, // Reduzido para rotação mais suave
 };
 
 // --- Controles de Movimento ---
@@ -420,8 +420,13 @@ function updateMonster(delta) {
         if (distanceToMovementTargetSq > epsilon * epsilon) {
             monsterMoveDir.subVectors(targetPosForMovement, currentBasePos).normalize();
             const moveDistance = monster.speed * delta;
-            // Remove a limitação para garantir movimento contínuo - sempre move a distância total do frame.
-            const actualMoveDistance = moveDistance; // Math.min(moveDistance, Math.sqrt(distanceToMovementTargetSq));
+
+            // Limita a distância APENAS se estiver seguindo um nó do caminho, para evitar overshoot e oscilação.
+            // Se estiver indo direto para o jogador (isFollowingPath === false), move a distância total.
+            let actualMoveDistance = moveDistance;
+            if (isFollowingPath) {
+                 actualMoveDistance = Math.min(moveDistance, Math.sqrt(distanceToMovementTargetSq));
+            }
             positionUpdateVector.copy(monsterMoveDir).multiplyScalar(actualMoveDistance);
 
             // Aplica o movimento
